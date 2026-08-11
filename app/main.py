@@ -3,17 +3,18 @@ from __future__ import annotations
 import os
 
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from structlog.contextvars import bind_contextvars
 
 from .agent import LabAgent
+from .dashboard import render_dashboard
 from .incidents import disable, enable, status
 from .logging_config import configure_logging, get_logger
 from .metrics import record_error, snapshot
 from .middleware import CorrelationIdMiddleware
 from .pii import hash_user_id, summarize_text
 from .schemas import ChatRequest, ChatResponse
-from .tracing import tracing_enabled
+from .tracing import get_langfuse_client, tracing_enabled
 
 configure_logging()
 log = get_logger()
@@ -37,14 +38,29 @@ async def health() -> dict:
     return {"ok": True, "tracing_enabled": tracing_enabled(), "incidents": status()}
 
 
+@app.post("/tracing/flush")
+async def flush_tracing() -> dict:
+    """Flush pending Langfuse events for reproducible lab evidence."""
+    get_langfuse_client().flush()
+    return {"ok": True, "tracing_enabled": tracing_enabled()}
+
+
 @app.get("/metrics")
 async def metrics() -> dict:
     return snapshot()
 
 
+@app.get("/dashboard", response_class=HTMLResponse)
+async def dashboard() -> HTMLResponse:
+    return render_dashboard()
+
+
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: Request, body: ChatRequest) -> ChatResponse:
     bind_contextvars(
+        # BaseHTTPMiddleware may execute the endpoint in a separate task, so
+        # explicitly carry the request-scoped ID into the API logging context.
+        correlation_id=request.state.correlation_id,
         user_id_hash=hash_user_id(body.user_id),
         session_id=body.session_id,
         feature=body.feature,
@@ -63,6 +79,7 @@ async def chat(request: Request, body: ChatRequest) -> ChatResponse:
             feature=body.feature,
             session_id=body.session_id,
             message=body.message,
+            prompt_label=request.headers.get("x-prompt-label"),
         )
         log.info(
             "response_sent",

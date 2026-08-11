@@ -101,6 +101,25 @@ def test_langfuse_prompt_version_and_label_are_resolved(monkeypatch) -> None:
     )
 
 
+def test_explicit_prompt_label_overrides_environment(monkeypatch) -> None:
+    from app.prompt_management import resolve_prompt
+
+    monkeypatch.setenv("LANGFUSE_PROMPT_LABEL", "production")
+    client = RecordingPromptClient()
+
+    resolve_prompt(
+        client,
+        feature="qa",
+        docs=["Trace first"],
+        message="Which prompt is active?",
+        enabled=True,
+        prompt_label="candidate",
+    )
+
+    assert client.request is not None
+    assert client.request[1]["label"] == "candidate"
+
+
 def test_prompt_fetch_failure_uses_visible_local_fallback() -> None:
     from app.prompt_management import resolve_prompt
 

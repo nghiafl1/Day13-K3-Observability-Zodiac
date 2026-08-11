@@ -1,19 +1,19 @@
 alerts:
-  - name: TODO_alert_1
-    severity: TODO
-    condition: TODO
+  - name: High API latency
+    severity: warning
+    condition: P95 request latency exceeds 3000 ms for 10 minutes
     type: symptom-based
-    owner: TODO
+    owner: Observability team
     runbook: docs/alerts.md#alert-1
-  - name: TODO_alert_2
-    severity: TODO
-    condition: TODO
+  - name: Elevated API error rate
+    severity: critical
+    condition: Error rate exceeds 2% for 5 minutes
     type: symptom-based
-    owner: TODO
+    owner: API team
     runbook: docs/alerts.md#alert-2
-  - name: TODO_alert_3
-    severity: TODO
-    condition: TODO
+  - name: Quality proxy degradation
+    severity: warning
+    condition: Mean quality score is below 0.75 for 15 minutes
     type: symptom-based
-    owner: TODO
+    owner: AI team
     runbook: docs/alerts.md#alert-3

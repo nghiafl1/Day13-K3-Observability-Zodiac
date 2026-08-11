@@ -34,9 +34,10 @@ def resolve_prompt(
     docs: list[str],
     message: str,
     enabled: bool,
+    prompt_label: str | None = None,
 ) -> ResolvedPrompt:
     name = os.getenv("LANGFUSE_PROMPT_NAME", "day13-chat")
-    label = os.getenv("LANGFUSE_PROMPT_LABEL", "production")
+    label = prompt_label or os.getenv("LANGFUSE_PROMPT_LABEL", "production")
     text = _compile_local_prompt(feature=feature, docs=docs, message=message)
     if enabled:
         try:

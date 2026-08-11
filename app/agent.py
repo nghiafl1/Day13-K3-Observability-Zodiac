@@ -27,7 +27,14 @@ class LabAgent:
         self.llm = FakeLLM(model=model)
 
     @observe(as_type="generation", capture_input=False, capture_output=False)
-    def run(self, user_id: str, feature: str, session_id: str, message: str) -> AgentResult:
+    def run(
+        self,
+        user_id: str,
+        feature: str,
+        session_id: str,
+        message: str,
+        prompt_label: str | None = None,
+    ) -> AgentResult:
         started = time.perf_counter()
         docs = retrieve(message)
         langfuse_client = get_langfuse_client()
@@ -37,6 +44,7 @@ class LabAgent:
             docs=docs,
             message=message,
             enabled=tracing_enabled(),
+            prompt_label=prompt_label,
         )
         response = self.llm.generate(prompt.text)
         quality_score = self._heuristic_quality(message, response.text, docs)
