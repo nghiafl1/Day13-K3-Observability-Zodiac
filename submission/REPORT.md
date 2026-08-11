@@ -52,4 +52,4 @@ Với mỗi thành viên, ghi rõ nhiệm vụ và link commit/PR tương ứng.
 
 | Thành viên | Phần việc | Commit/PR | Điều đã học |
 |---|---|---|---|
-| | | | |
+| Phạm Thế Dũng (2A202601985) | Hoàn thành Checkpoint 1: triển khai correlation ID, log enrichment và PII scrubbing trong middleware, API và logging processor. | `COMMIT_SHA_CP1` | Logging có cấu trúc, contextvars và bảo vệ dữ liệu cá nhân. |
