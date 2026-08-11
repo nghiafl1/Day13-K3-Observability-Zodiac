@@ -59,4 +59,4 @@
 | Thành viên | Phần việc | Commit/PR | Điều đã học |
 |---|---|---|---|
 | Nguyễn Huy Nghĩa (2A202601943) | CP1: correlation ID, log enrichment, PII scrubbing; CP2: trace/prompt workflow, dashboard, SLO, alert và runbook. | `be391d6`, `f0b1104`, `70bd7a2` | Liên kết structured logs, traces, prompt versioning và các SLO/alert có thể vận hành. |
-| Phạm Văn Lưu (2A202601857) | CP3: chạy official challenge, điều tra Metrics → Traces → Logs, lưu evidence, đề xuất fix/preventive measure; bổ sung tiêu chí còn thiếu cho rubric. | `Sẽ cập nhật bằng commit CP3 ngay sau khi hoàn thiện evidence ảnh.` | Dùng P95 để nhận biết latency incident, dùng trace khoanh vùng và correlation ID/log để chứng minh root cause. |
+| Phạm Văn Lưu (2A202601857) | CP3: chạy official challenge, điều tra Metrics → Traces → Logs, lưu evidence, đề xuất fix/preventive measure; bổ sung tiêu chí còn thiếu cho rubric. | `e46c34b` | Dùng P95 để nhận biết latency incident, dùng trace khoanh vùng và correlation ID/log để chứng minh root cause. |
