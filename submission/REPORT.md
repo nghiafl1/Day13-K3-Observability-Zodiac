@@ -39,7 +39,7 @@
 - Challenge ID: `day13-k3-observability-v1`
 - Incident chính thức: `rag_slow`; feature bị ảnh hưởng: `refund`.
 - Triệu chứng từ metrics: 5 request thành công, nhưng `latency_p50=3579 ms`, `latency_p95=4685 ms` và `latency_p99=4685 ms`. P95 vượt ngưỡng challenge `2000 ms`; không có error (`error_breakdown={}`, `error_rate_pct=0.0`). Xem `submission/evidence/challenge-metrics.txt`.
-- Trace/waterfall: Langfuse đã được flush sau khi chạy. Trong Langfuse, lọc trace theo feature `refund` và khoảng thời gian challenge; waterfall phải cho thấy span `run` chậm. **Bổ sung ảnh và Trace ID thật vào `submission/evidence/challenge-trace-waterfall.png` trước khi nộp.**
+- Trace/waterfall: Langfuse đã được flush sau khi chạy. Trace ID `e8daea2a1f5cf3fe1385b67fe765d521` (session `k3-challenge-s02`, `correlation_id=req-b1569811`) cho thấy span `run` mất `4.69 s`; metadata có prompt name/label/version và correlation ID. Ảnh: `submission/evidence/challenge-trace-waterfall.png`.
 - Log/correlation evidence: `req-b1569811` (session `k3-challenge-s02`) có cặp `request_received` → `response_sent` với `latency_ms=4685`; bốn request còn lại có latency 3522–3741 ms. Tất cả đều có `feature=refund`, `session_id`, `user_id_hash`, `model`, `env` và `correlation_id`. Xem `submission/evidence/challenge-log-correlation.txt`.
 - Root cause: `app/mock_rag.py`, hàm `retrieve()`, chủ động gọi `time.sleep(2.5)` khi `STATE["rag_slow"]` bật. Dấu hiệu này phù hợp với P95 tăng cao trong khi error rate vẫn 0%.
 - Fix action: đặt timeout và retry/backoff có giới hạn cho retrieval; dùng fallback cached answer khi vector retrieval chậm.
