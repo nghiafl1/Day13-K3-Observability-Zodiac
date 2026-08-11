@@ -1,31 +1,33 @@
 # Alert runbook
 
-## Alert 1 — High API latency
+## high_latency_p95
 
-- Severity: warning
-- SLI/SLO: latency P95 ≤ 3000 ms.
-- Condition: P95 exceeds 3000 ms for 10 minutes.
-- User impact: slow answers and possible client timeouts.
-- First checks: identify the affected window in the dashboard; open a slow trace; find its matching correlation ID in logs.
-- Temporary mitigation: disable the suspected incident or reduce concurrency while investigating.
-- Owner: Observability team.
+- Severity/owner: warning, Observability team.
+- Trigger: P95 request latency exceeds 3000 ms for 10 minutes.
+- Investigate: identify the affected dashboard window, open a slow Langfuse trace and waterfall, then search the matching `correlation_id` in `data/logs.jsonl`.
+- Mitigate: disable the suspected incident, reduce concurrency, or use a cached/fallback response.
+- Prevent recurrence: set a retrieval timeout and alert on dependency/span latency before end-to-end P95 is breached.
 
-## Alert 2 — Elevated API error rate
+## elevated_error_rate
 
-- Severity: critical
-- SLI/SLO: error rate ≤ 2%.
-- Condition: error rate exceeds 2% for 5 minutes.
-- User impact: requests fail before receiving an answer.
-- First checks: inspect error breakdown; open the failing trace; compare with `request_failed` logs.
-- Temporary mitigation: roll back the failing configuration or disable the unhealthy dependency.
-- Owner: API team.
+- Severity/owner: critical, API team.
+- Trigger: error rate exceeds 2% for 5 minutes.
+- Investigate: inspect `error_breakdown`, open a failing trace, and compare it with the `request_failed` log for the same correlation ID.
+- Mitigate: roll back the failing configuration or disable the unhealthy dependency.
+- Prevent recurrence: add dependency health checks, bounded retries, and an error-budget alert.
 
-## Alert 3 — Quality proxy degradation
+## cost_budget_exceeded
 
-- Severity: warning
-- SLI/SLO: mean quality score ≥ 0.75.
-- Condition: mean quality score is below 0.75 for 15 minutes.
-- User impact: answers are returned but are less useful.
-- First checks: compare prompt label/version; inspect a low-quality trace; compare retrieved docs with the matching log.
-- Temporary mitigation: roll back the `production` label to the baseline prompt version.
-- Owner: AI team.
+- Severity/owner: warning, AI team.
+- Trigger: total daily cost exceeds 2.50 USD.
+- Investigate: group traces by model, feature, prompt label/version, token usage and cost.
+- Mitigate: throttle high-cost traffic, cap output tokens, or roll back an expensive prompt/model change.
+- Prevent recurrence: enforce per-request token limits and alert before 80% of the daily budget.
+
+## quality_proxy_degradation
+
+- Severity/owner: warning, AI team.
+- Trigger: mean quality score is below 0.75 for 15 minutes.
+- Investigate: compare prompt label/version, inspect low-quality traces, and compare retrieved documents with matching logs.
+- Mitigate: roll `production` back to the baseline prompt version.
+- Prevent recurrence: canary prompt versions and gate promotion on the quality proxy.

@@ -1,0 +1,17 @@
+Official challenge execution completed on 2026-08-11.
+
+1. python scripts/inject_incident.py
+   200 {"ok": true, "incidents": {"rag_slow": true, "tool_fail": false, "cost_spike": false}}
+
+2. python scripts/load_test.py --challenge --concurrency 5
+   Challenge: day13-k3-observability-v1 | Cohort: K3
+   Five refund requests completed with HTTP 200.
+
+3. POST /tracing/flush
+   {"ok": true, "tracing_enabled": true}
+
+4. python scripts/inject_incident.py --disable
+   200 {"ok": true, "incidents": {"rag_slow": false, "tool_fail": false, "cost_spike": false}}
+
+5. python scripts/validate_dashboard.py
+   HOP LE: 6/6 panel co trong dashboard contract.
