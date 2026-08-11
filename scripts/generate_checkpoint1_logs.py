@@ -11,6 +11,7 @@ from fastapi.testclient import TestClient
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from app.main import app
+from app.logging_config import LOG_PATH
 
 
 REQUESTS = (
@@ -32,6 +33,9 @@ REQUESTS = (
 
 
 def main() -> None:
+    # The log file is generated evidence, so rebuild it deterministically instead
+    # of mixing old baseline records with the current checkpoint implementation.
+    LOG_PATH.unlink(missing_ok=True)
     with TestClient(app) as client:
         for payload in REQUESTS:
             response = client.post(

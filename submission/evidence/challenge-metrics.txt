@@ -1,0 +1,22 @@
+Challenge ID: day13-k3-observability-v1
+Incident: rag_slow
+Affected feature: refund
+Configured latency threshold: 2000 ms
+Command: python scripts/load_test.py --challenge --concurrency 5
+
+Metrics captured immediately after the official run:
+{
+  "traffic": 5,
+  "latency_p50": 3579.0,
+  "latency_p95": 4685.0,
+  "latency_p99": 4685.0,
+  "avg_cost_usd": 0.0022,
+  "total_cost_usd": 0.011,
+  "tokens_in_total": 162,
+  "tokens_out_total": 698,
+  "error_breakdown": {},
+  "error_rate_pct": 0.0,
+  "quality_avg": 0.86
+}
+
+Finding: latency_p95 (4685 ms) exceeds the challenge threshold (2000 ms).

@@ -1,19 +1,25 @@
 alerts:
-  - name: High API latency
+  - name: high_latency_p95
     severity: warning
     condition: P95 request latency exceeds 3000 ms for 10 minutes
     type: symptom-based
     owner: Observability team
-    runbook: docs/alerts.md#alert-1
-  - name: Elevated API error rate
+    runbook: docs/alerts.md#high_latency_p95
+  - name: elevated_error_rate
     severity: critical
     condition: Error rate exceeds 2% for 5 minutes
     type: symptom-based
     owner: API team
-    runbook: docs/alerts.md#alert-2
-  - name: Quality proxy degradation
+    runbook: docs/alerts.md#elevated_error_rate
+  - name: cost_budget_exceeded
+    severity: warning
+    condition: Total daily cost exceeds 2.50 USD
+    type: symptom-based
+    owner: AI team
+    runbook: docs/alerts.md#cost_budget_exceeded
+  - name: quality_proxy_degradation
     severity: warning
     condition: Mean quality score is below 0.75 for 15 minutes
     type: symptom-based
     owner: AI team
-    runbook: docs/alerts.md#alert-3
+    runbook: docs/alerts.md#quality_proxy_degradation

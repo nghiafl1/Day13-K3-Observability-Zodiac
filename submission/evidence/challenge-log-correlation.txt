@@ -1,0 +1,15 @@
+Challenge log evidence, all feature=refund, env=dev:
+
+req-5ca74de6 | session=k3-challenge-s03 | request_received -> response_sent | latency_ms=3579
+req-b50b043f | session=k3-challenge-s01 | request_received -> response_sent | latency_ms=3544
+req-a2784520 | session=k3-challenge-s04 | request_received -> response_sent | latency_ms=3522
+req-5e91feb2 | session=k3-challenge-s05 | request_received -> response_sent | latency_ms=3741
+req-b1569811 | session=k3-challenge-s02 | request_received -> response_sent | latency_ms=4685
+
+Control event:
+incident_enabled | name=rag_slow | correlation_id=req-c633a395
+
+Root-cause code path:
+app/mock_rag.py: retrieve() calls time.sleep(2.5) whenever STATE["rag_slow"] is true.
+
+PII check: only user_id_hash is logged; no raw user_id, email, phone, card or CCCD is present.
