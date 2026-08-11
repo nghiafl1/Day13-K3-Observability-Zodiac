@@ -4,13 +4,16 @@
 
 - Tên nhóm: Zodiac
 - Repository URL: https://github.com/nghiafl1/Day13-K3-Observability-Zodiac
-- Commit SHA cuối:
-- Thành viên và vai trò: Nguyễn Huy Nghĩa (2A202601943) — phụ trách Checkpoint 2.
+- Commit SHA cuối: `eeeac859919447760ffe15e9ec1b1d554be4e626`
+- Thành viên và vai trò:
+  - Phạm Thế Dũng (2A202601985) — phụ trách Checkpoint 1: logging, correlation ID và PII scrubbing.
+  - Nguyễn Huy Nghĩa (2A202601943) — phụ trách Checkpoint 2: tracing, prompt versioning, dashboard, SLO và alerts.
+  - Phạm Văn Lưu (2A202601857) — phụ trách Checkpoint 3: challenge investigation, evidence và báo cáo incident.
 
 ## 2. Kết quả kỹ thuật
 
 - Điểm `validate_logs.py`: 100/100 (xem `submission/evidence/checkpoint1-validator.txt`; tái tạo bằng `python scripts/generate_checkpoint1_logs.py`)
-- Tổng số traces: tối thiểu 20 traces đã gửi lên Langfuse
+- Tổng số traces: tối thiểu 20 traces đã gửi lên Langfuse; danh sách: `submission/evidence/langfuse-trace-list.txt`
 - Số PII leak còn lại: 0
 - Dashboard: `http://127.0.0.1:8000/dashboard`
 - `validate_dashboard.py`: HỢP LỆ: 6/6 panel
@@ -29,7 +32,9 @@
 - Version/label baseline: v1 / `baseline`, `production`
 - Version/label candidate: v2 / `candidate`
 - Trace ID baseline v1: `d97b598b925b4639b59253c88d41e206`
+- Evidence trace baseline v1: `submission/evidence/trace-baseline-v1.png`
 - Trace ID candidate v2: `a9eaea7db4ca1f5504a8225de0e0f088`
+- Evidence trace candidate v2: `submission/evidence/trace-candidate-v2.png`
 - Trace ID production v2 trước rollback: `03449f05113c31dbb82cb1680e0829f9`
 - Trace ID production v1 sau rollback: `46530b7612ac337fa54df14014f401f6`
 - Bằng chứng đổi label/rollback: `submission/evidence/prompt-rollback.png`
@@ -59,5 +64,5 @@
 | Thành viên | Phần việc | Commit/PR | Điều đã học |
 |---|---|---|---|
 | Phạm Thế Dũng (2A202601985) | CP1: correlation ID, log enrichment và PII scrubbing. | `be391d6`, `f0b1104` | Structured JSON logs, request context và che PII trước khi ghi log. |
-| Nguyễn Huy Nghĩa (2A202601943) | CP2: Langfuse trace/prompt workflow, dashboard, SLO, alert rules và runbook. | `70bd7a2` | Liên kết traces, prompt versioning, dashboard và SLO/alert có thể vận hành. |
+| Nguyễn Huy Nghĩa (2A202601943) | CP2: Langfuse trace/prompt workflow, dashboard, SLO, alert rules và runbook. | `70bd7a2`, `948db2c` | Liên kết traces, prompt versioning, dashboard và SLO/alert có thể vận hành. |
 | Phạm Văn Lưu (2A202601857) | CP3: chạy official challenge, điều tra Metrics → Traces → Logs, lưu evidence, đề xuất fix/preventive measure; bổ sung tiêu chí còn thiếu cho rubric. | `e46c34b`, `f2d0234`, `32fd7d5` | Dùng P95 để nhận biết latency incident, dùng trace khoanh vùng và correlation ID/log để chứng minh root cause. |

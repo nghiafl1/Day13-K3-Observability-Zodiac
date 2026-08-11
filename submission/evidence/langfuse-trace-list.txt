@@ -1,0 +1,23 @@
+Langfuse trace list — captured for Day 13 evidence
+Columns: trace_id | session_id | prompt_label | prompt_version
+
+d97b598b925b4639b59253c88d41e206 | s-cp2-live | production | 1
+46530b7612ac337fa54df14014f401f6 | qa | production | 1
+03449f05113c31dbb82cb1680e0829f9 | qa | production | 2
+a9eaea7db4ca1f5504a8225de0e0f088 | qa | candidate | 2
+dea4d7e5fe81f13dd3966ce25ea556c3 | qa | baseline | 1
+5319d366f9ce255268010d40f2eccd50 | s07 | production | local-v1
+9c8d8a27f4091627c0b942979e32f3ab | s10 | production | local-v1
+f09152cfeab2703b13fb017591305f4e | s09 | production | local-v1
+fbae30566500cb96bf5c30dd598e20e0 | s08 | production | local-v1
+1010d197312e9623f52475a67cd45589 | s06 | production | local-v1
+135f719342e2318b1d69af0b47e69367 | s01 | production | local-v1
+29f5dc2fb9ffe889c5460aec4b88537e | s05 | production | local-v1
+2f8fb2fc54e6481be2a233c1a49a18be | s02 | production | local-v1
+0e0a89541eff63c166c374ac0700a336 | s04 | production | local-v1
+74d04287a4ea06d0d078a4caf31844d4 | s03 | production | local-v1
+e53f24b7e53d77c351e1c3f07114f72f | s10 | production | local-v1
+a20936bdc0050615350baded2c69145d | s09 | production | local-v1
+70b34f5812c82678592c1d780399c146 | s08 | production | local-v1
+ebdfc807a29e1b45e3ec36a38281013f | s07 | production | local-v1
+9f7a1c0882d6d99ee03d568522af2e79 | s06 | production | local-v1
